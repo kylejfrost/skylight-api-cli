@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { resolve } from 'node:path';
 
 function loadDotEnv(file = '.env') {
@@ -42,6 +43,7 @@ export function loadConfig(options = {}) {
     email: options.email || env('SKYLIGHT_EMAIL'),
     password: options.password || env('SKYLIGHT_PASSWORD'),
     frameId: options.frameId || env('SKYLIGHT_FRAME_ID'),
+    token: options.token || env('SKYLIGHT_TOKEN'),
     opItem: item,
     opVault: vault,
   };
@@ -49,6 +51,13 @@ export function loadConfig(options = {}) {
     cfg.email ||= opField(item, 'username', vault) || opField(item, 'email', vault);
     cfg.password ||= opField(item, 'password', vault);
     cfg.frameId ||= opField(item, 'frame_id', vault) || opField(item, 'frame id', vault) || opField(item, 'frameId', vault);
+  }
+  if (!cfg.token) {
+    const tokenFile = options.tokenFile || env('SKYLIGHT_TOKEN_FILE') || resolve(homedir(), '.skylight_token');
+    if (existsSync(tokenFile)) {
+      const raw = readFileSync(tokenFile, 'utf8').trim();
+      cfg.token = raw.replace(/^Bearer\s+/i, '');
+    }
   }
   return cfg;
 }
