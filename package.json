@@ -1,0 +1,42 @@
+{
+  "name": "skylight-api-cli",
+  "version": "0.1.0",
+  "description": "Unofficial CLI and agent skill for the Skylight Calendar/Frame web API.",
+  "type": "module",
+  "bin": {
+    "skylight": "./bin/skylight.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "smoke:readonly": "node ./bin/skylight.js smoke --readonly",
+    "discover": "node ./bin/skylight.js discover"
+  },
+  "keywords": [
+    "skylight",
+    "skylight-calendar",
+    "cli",
+    "unofficial"
+  ],
+  "author": "Red Hills Media",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/redhillsmedia/skylight-api-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/redhillsmedia/skylight-api-cli/issues"
+  },
+  "homepage": "https://github.com/redhillsmedia/skylight-api-cli#readme"
+}
