@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 
 function env(name) {
   return process.env[name] && process.env[name].trim() ? process.env[name].trim() : undefined;
@@ -7,11 +7,10 @@ function env(name) {
 function opField(item, field, vault) {
   const args = ['item', 'get', item, '--field', field, '--reveal'];
   if (vault) args.splice(3, 0, '--vault', vault);
-  try {
-    return execFileSync('op', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim() || undefined;
-  } catch {
-    return undefined;
-  }
+  const res = spawnSync('op', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 8000 });
+  if (res.error?.code === 'ETIMEDOUT') throw new Error('1password cli timed out. unlock/sign in to 1password or use environment variables.');
+  if (res.status !== 0) return undefined;
+  return res.stdout.trim() || undefined;
 }
 
 export function loadConfig(options = {}) {
