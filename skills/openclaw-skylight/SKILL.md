@@ -14,14 +14,15 @@ this is unofficial and not affiliated with skylight.
 - default to read-only commands.
 - never create, update, delete, complete, redeem, reset, invite, approve, block, or sync-write unless kyle explicitly asks for that exact mutation.
 - do not print tokens, passwords, share tokens, private emails, phone numbers, or raw full api responses into chat.
-- use 1password credentials. do not store credentials in scripts, memory, logs, or repos.
+- local credentials live in `/Users/apollo/skylight-api-cli/.env`, which must stay ignored and untracked.
+- do not store credentials in scripts, memory, logs, or committed repo files.
 - if a response contains personal data, summarize only the needed fields.
 
 ## setup
 
-preferred credential source:
+credential source:
 
-`SKYLIGHT_1PASSWORD_ITEM="Skylight API" SKYLIGHT_1PASSWORD_VAULT="Private"`
+`/Users/apollo/skylight-api-cli/.env`
 
 cli path during local development:
 
@@ -31,7 +32,7 @@ cli path during local development:
 
 read-only smoke test:
 
-`SKYLIGHT_1PASSWORD_ITEM="Skylight API" SKYLIGHT_1PASSWORD_VAULT="Private" skylight smoke --readonly --json`
+`cd /Users/apollo/skylight-api-cli && skylight smoke --readonly --json`
 
 current user:
 
